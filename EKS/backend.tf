@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "acecloud-mega-project-s3bucket"  # Replace with your actual S3 bucket name
+    bucket = "amazons3_bucket_project"  # Replace with your actual S3 bucket name
     key    = "EKS/terraform.tfstate"  
-    region = "ap-south-1" 
+    region = "ap-east-1" 
   }
 }
