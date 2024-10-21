@@ -3,9 +3,14 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Get available availability zones for EKS in the region
-data "aws_availability_zones" "available" {
+# Get supported availability zones for EKS in the region (exclude unsupported ones)
+data "aws_availability_zones" "supported" {
   state = "available"
+
+  filter {
+    name   = "zone-name"
+    values = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1f"] # Supported zones for EKS in us-east-1
+  }
 }
 
 # Get public subnets for the cluster, ensuring they are in supported availability zones
@@ -17,7 +22,7 @@ data "aws_subnets" "public" {
 
   filter {
     name   = "availability-zone"
-    values = data.aws_availability_zones.available.names
+    values = data.aws_availability_zones.supported.names
   }
 }
 
